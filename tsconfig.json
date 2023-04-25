@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "target": "es6",
+    "moduleResolution": "nodenext"
+  }
+}

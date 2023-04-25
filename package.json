@@ -1,0 +1,20 @@
+{
+  "name": "microblog-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.16.0",
+    "@types/pg": "^8.6.6",
+    "express": "^4.18.2",
+    "pg": "^8.10.0"
+  }
+}
