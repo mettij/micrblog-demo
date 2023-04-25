@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Microblog Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="ui.js"></script>
+  </head>
+
+  <body>
+    <div class="pane">
+      <p>Display posts by:</p>
+      <ul id="users-list">
+        <li><a id="all-posts-link" href="#">All</a></li>
+        <!-- populated by JS -->
+      </ul>
+      <p>Currently displaying <span id="num-posts">0</span> post(s).</p>
+
+      <div id="posts">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <div class="pane" id="new-post">
+      <label for="userid">New post by:</label>
+      <select name="userid" id="new-post-author">
+        <!-- populated by JS -->
+      </select>
+      <br>
+
+      <textarea name="content" id="new-post-content" rows="4"></textarea>
+      <br>
+
+      <a href="#" id="new-post-submit">Post</a>
+    </div>
+  </body>
+</html>

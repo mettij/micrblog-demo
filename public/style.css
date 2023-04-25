@@ -1,0 +1,66 @@
+html {
+  background-color: lightgray;
+  font-family: Helvetica, sans-serif;
+}
+
+body {
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pane {
+  background-color: white;
+  margin-top: 1em;
+  border-radius: 1em;
+  box-shadow: 0 0 5px darkgray;
+  padding: 1em;
+}
+
+#users-list li {
+  display: inline;
+  margin-left: 1em;
+}
+
+#posts hr {
+  height: 1px;
+  background-color: darkgray;
+  border: 0px;
+}
+
+p.author {
+  font-weight: bold;
+}
+
+p.timestamp {
+  color: darkgray;
+}
+
+a.delete-post {
+  color: darkred;
+  display: inline;
+  margin-left: 1em;
+}
+
+#new-post {
+  padding-bottom: 2.5em;
+}
+
+#new-post-content {
+  width: 70%;
+  margin: 0.5em;
+  resize: none;
+  border: solid 1px darkgray;
+  border-radius: 2px;
+  font-size: 1em;
+}
+
+#new-post-submit {
+  background-color: lightgray;
+  color: black;
+  text-decoration: none;
+  padding: 0.25em;
+  border-radius: 0.5em;
+  float: right;
+  box-shadow: 0 0 5px darkgray;
+}
