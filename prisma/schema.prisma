@@ -17,7 +17,7 @@ model posts {
 
 model users {
   id          Int     @id @default(autoincrement())
-  handle      String?
+  handle      String? @unique
   displayname String?
   posts       posts[]
 }

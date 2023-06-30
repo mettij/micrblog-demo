@@ -40,11 +40,11 @@ app.delete("/posts", db.deletePost);
 async function main() {
     await prisma.users.create({
         data: {
-            handle: 'Lets double check',
-            displayname: '@seems legit',
+            handle: '@justinmetti',
+            displayname: 'justin metti',
             posts: {
                 create: {
-                    content: 'god i wish',
+                    content: 'I sure hope no one tries to steal my handle',
                     time: new Date(),
                  },
             },
