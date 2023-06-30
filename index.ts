@@ -1,8 +1,16 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+import express from 'express';
+import bodyParser from 'body-parser';
+
+// const express = require("express");
+// const bodyParser = require("body-parser");
 
 const app = express();
-const db = require("./queries");
+// import * db from './queries.js';
+// const db = require("./queries");
+import * as db from './queries.js';
 const port: number = 3000;
 
 // parse request bodies in middleware
@@ -28,7 +36,42 @@ app.get("/posts/:userID", db.getPostsByUser);
 app.post("/posts", db.createPost);
 app.delete("/posts", db.deletePost);
 
-// run the app on the provided port
+
+async function main() {
+    await prisma.users.create({
+        data: {
+            handle: 'Lets double check',
+            displayname: '@seems legit',
+            posts: {
+                create: {
+                    content: 'god i wish',
+                    time: new Date(),
+                 },
+            },
+         },
+    })
+
+    const allUsers = await prisma.users.findMany({
+        include: { posts: true },
+    })
+    console.dir(allUsers, { depth: null })
+
+}
+
+
+
+main()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
+
+  // run the app on the provided port
 app.listen(port, () => {
-  console.log(`App running on port ${port}`);
-})
+    console.log(`App running on port ${port}`);
+  })
+  

@@ -1,6 +1,9 @@
 // database login info
 // TODO: move this to .env
-const Pool = require("pg").Pool;
+// const Pool = require("pg").Pool;
+// import { Pool } from "pg";
+import pkg from 'pg';
+const { Pool } = pkg;
 const pool = new Pool({
   user: "metti",
   host: "localhost",
@@ -13,7 +16,7 @@ const pool = new Pool({
  */
 
 // get all users in the database
-const getUsers = (req, res) => {
+export const getUsers = (req, res) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
     if (error) {
       throw error;
@@ -24,7 +27,7 @@ const getUsers = (req, res) => {
 };
 
 // get info on the user with the specified id
-const getUserById = (req, res) => {
+export const getUserById = (req, res) => {
   const id: number = parseInt(req.params.id);
 
   pool.query("SELECT * FROM users WHERE id = $1", [id], (error, results) => {
@@ -37,7 +40,7 @@ const getUserById = (req, res) => {
 };
 
 // create a new user with the given handle and display name
-const createUser = (req, res) => {
+export const createUser = (req, res) => {
   const {handle, displayName} = req.body;
 
   pool.query(
@@ -54,7 +57,7 @@ const createUser = (req, res) => {
 };
 
 // change the handle and display name of the user with the given id
-const updateUser = (req, res) => {
+export const updateUser = (req, res) => {
   const id: number = parseInt(req.params.id);
   const {handle, displayName} = req.body;
 
@@ -75,7 +78,7 @@ const updateUser = (req, res) => {
  */
 
 // get all posts, sorted by timestamp (most recent first)
-const getPosts = (req, res) => {
+export const getPosts = (req, res) => {
   pool.query(
     "SELECT posts.id AS postID, posts.content, posts.time, users.displayname, users.handle FROM posts JOIN users ON userid = users.id ORDER BY time DESC",
     (error, results) => {
@@ -89,7 +92,7 @@ const getPosts = (req, res) => {
 };
 
 // get posts by the given user, sorted by timestamp (most recent first)
-const getPostsByUser = (req, res) => {
+export const getPostsByUser = (req, res) => {
   const userID: number = parseInt(req.params.userID);
 
   pool.query(
@@ -107,7 +110,7 @@ const getPostsByUser = (req, res) => {
 
 // create a new post by the given user
 // TODO: add login script so that the user can be verified
-const createPost = (req, res) => {
+export const createPost = (req, res) => {
   const {userID, content} = req.body;
 
   pool.query(
@@ -124,7 +127,7 @@ const createPost = (req, res) => {
 };
 
 // deletes the given post from the database
-const deletePost = (req, res) => {
+export const deletePost = (req, res) => {
   const postID = req.body.postID;
 
   pool.query("DELETE FROM posts WHERE id = $1", [postID], (error, results) => {
@@ -136,14 +139,14 @@ const deletePost = (req, res) => {
   });
 };
 
-module.exports = {
-  getUsers,
-  getUserById,
-  createUser,
-  updateUser,
+// module.exports = {
+//   getUsers,
+//   getUserById,
+//   createUser,
+//   updateUser,
 
-  getPosts,
-  getPostsByUser,
-  createPost,
-  deletePost
-};
+//   getPosts,
+//   getPostsByUser,
+//   createPost,
+//   deletePost
+// };

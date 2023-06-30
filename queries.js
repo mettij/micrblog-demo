@@ -1,6 +1,9 @@
 // database login info
 // TODO: move this to .env
-const Pool = require("pg").Pool;
+// const Pool = require("pg").Pool;
+// import { Pool } from "pg";
+import pkg from 'pg';
+const { Pool } = pkg;
 const pool = new Pool({
     user: "metti",
     host: "localhost",
@@ -11,7 +14,7 @@ const pool = new Pool({
 /* Queries regarding user creation/deletion/access
  */
 // get all users in the database
-const getUsers = (req, res) => {
+export const getUsers = (req, res) => {
     pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
         if (error) {
             throw error;
@@ -20,7 +23,7 @@ const getUsers = (req, res) => {
     });
 };
 // get info on the user with the specified id
-const getUserById = (req, res) => {
+export const getUserById = (req, res) => {
     const id = parseInt(req.params.id);
     pool.query("SELECT * FROM users WHERE id = $1", [id], (error, results) => {
         if (error) {
@@ -30,7 +33,7 @@ const getUserById = (req, res) => {
     });
 };
 // create a new user with the given handle and display name
-const createUser = (req, res) => {
+export const createUser = (req, res) => {
     const { handle, displayName } = req.body;
     pool.query("INSERT INTO users (handle, displayname) VALUES ($1, $2) RETURNING *", [handle, displayName], (error, results) => {
         if (error) {
@@ -40,7 +43,7 @@ const createUser = (req, res) => {
     });
 };
 // change the handle and display name of the user with the given id
-const updateUser = (req, res) => {
+export const updateUser = (req, res) => {
     const id = parseInt(req.params.id);
     const { handle, displayName } = req.body;
     pool.query("UPDATE users SET handle = $1, displayname = $2 WHERE id = $3", [handle, displayName, id], (error, results) => {
@@ -53,7 +56,7 @@ const updateUser = (req, res) => {
 /* Queries regarding posting
  */
 // get all posts, sorted by timestamp (most recent first)
-const getPosts = (req, res) => {
+export const getPosts = (req, res) => {
     pool.query("SELECT posts.id AS postID, posts.content, posts.time, users.displayname, users.handle FROM posts JOIN users ON userid = users.id ORDER BY time DESC", (error, results) => {
         if (error) {
             throw error;
@@ -62,7 +65,7 @@ const getPosts = (req, res) => {
     });
 };
 // get posts by the given user, sorted by timestamp (most recent first)
-const getPostsByUser = (req, res) => {
+export const getPostsByUser = (req, res) => {
     const userID = parseInt(req.params.userID);
     pool.query("SELECT posts.id AS postID, posts.content, posts.time, users.displayname, users.handle FROM posts JOIN users ON userid = users.id WHERE userid = $1 ORDER BY time DESC", [userID], (error, results) => {
         if (error) {
@@ -73,7 +76,7 @@ const getPostsByUser = (req, res) => {
 };
 // create a new post by the given user
 // TODO: add login script so that the user can be verified
-const createPost = (req, res) => {
+export const createPost = (req, res) => {
     const { userID, content } = req.body;
     pool.query("INSERT INTO posts (userid, time, content) VALUES ($1, now(), $2) RETURNING *", [userID, content], (error, results) => {
         if (error) {
@@ -83,7 +86,7 @@ const createPost = (req, res) => {
     });
 };
 // deletes the given post from the database
-const deletePost = (req, res) => {
+export const deletePost = (req, res) => {
     const postID = req.body.postID;
     pool.query("DELETE FROM posts WHERE id = $1", [postID], (error, results) => {
         if (error) {
@@ -92,13 +95,13 @@ const deletePost = (req, res) => {
         res.status(200).send(`Post deleted with ID ${postID}`);
     });
 };
-module.exports = {
-    getUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    getPosts,
-    getPostsByUser,
-    createPost,
-    deletePost
-};
+// module.exports = {
+//   getUsers,
+//   getUserById,
+//   createUser,
+//   updateUser,
+//   getPosts,
+//   getPostsByUser,
+//   createPost,
+//   deletePost
+// };
